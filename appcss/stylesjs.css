@@ -1,0 +1,26 @@
+.griditem1, .griditem2 {
+    text-align: center;
+    display: grid;
+    grid-row-gap: 10px;
+    grid-template-columns: 1fr;
+    background-color:#00FFFF;
+    color: navy;
+    opacity: 1;
+}
+.griditem2 {
+    word-spacing: 12px;
+}
+
+body, header {
+    background: url("../images/resizedpokemon.png")no-repeat center center fixed; 
+    -webkit-background-size: 50%;
+    -moz-background-size: 50%;
+    -o-background-size: 50%;
+    background-size: 50%;
+    opacity: 0.7; 
+    }
+
+footer {
+    text-align: center;
+}
+
