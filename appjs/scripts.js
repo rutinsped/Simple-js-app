@@ -20,9 +20,9 @@ for (var i = 0; i < repository.length; i++) {
         var pokemon = repository[i];
 
         if (pokemon.height >= 2.0) {
-            document.write("<p>" +pokemon.name+ +pokemon.height+ " This one is really huge!" +"</p>");
+            document.write("<p>" +pokemon.name+" "+pokemon.height+ " This one is really huge!" +"</p>");
         }
         else {
-        document.write("<p>" +pokemon.name+ +pokemon.height+ "</p>");
+        document.write("<p>" +pokemon.name+" "+pokemon.height+ "</p>");
         }
 }
