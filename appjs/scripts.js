@@ -14,19 +14,19 @@ types: [ "Grass", "Poison" ]},
 height: 1.1, 
 types: [ "Bug", "Flying" ]}]
 
-var pokemon = respository[i];
-
 /* Using what learned to make the loop and testing if it's working properly.*/
 
 for (var i = 0; i < repository.length; i++) {
+
+        var pokemon = respository[i];
         
         document.write("pokemon.name: ", i, repository[i])
         
-        if (repository[i].height === 2.0) {
+        if (pokemon.height === 2.0) {
                 document.write("<p>" +pokemon.name+"This one is really huge!" +"</p>");
                 }
               
                 else {
-                document.write("<p>Here they are!</p>");
+                document.write("pokemon.name: ");
                 }
 }
