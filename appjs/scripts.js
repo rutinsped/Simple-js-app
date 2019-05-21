@@ -17,16 +17,12 @@ types: [ "Bug", "Flying" ]}]
 /* Using what learned to make the loop and testing if it's working properly.*/
 
 for (var i = 0; i < repository.length; i++) {
+        var pokemon = repository[i];
 
-        var pokemon = respository[i];
-        
-        document.write("pokemon.name: ", i, repository[i])
-        
-        if (pokemon.height === 2.0) {
-                document.write("<p>" +pokemon.name+"This one is really huge!" +"</p>");
-                }
-              
-                else {
-                document.write("pokemon.name: ");
-                }
+        if (pokemon.height >= 2.0) {
+            document.write("<p>" +pokemon.name+ +pokemon.height+ +pokemon.types+" This one is really huge!" +"</p>");
+        }
+        else {
+        document.write("<p>" +pokemon.name+ +pokemon.height+ +pokemon.types+ "</p>");
+        }
 }
