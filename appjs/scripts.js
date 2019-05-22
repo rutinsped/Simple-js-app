@@ -14,15 +14,12 @@ types: [ "Grass", "Poison" ]},
 height: 1.1, 
 types: [ "Bug", "Flying" ]}]
 
-/* Using what learned to make the loop and testing if it's working properly.*/
-
-for (var i = 0; i < repository.length; i++) {
-        var pokemon = repository[i];
-
-        if (pokemon.height >= 2.0) {
-            document.write("<p>" +pokemon.name+" "+pokemon.height+ " This one is really huge!" +"</p>");
-        }
-        else {
-        document.write("<p>" +pokemon.name+" "+pokemon.height+ "</p>");
-        }
-}
+repository.forEach(function(property){
+    if (property.height >= 2.0) {
+              document.write("<p>" +property.name+" "+property.height+ " This one is really huge!" +"</p>");
+          }
+          else {
+          document.write("<p>" +property.name+" "+property.height+ "</p>");
+          }
+  });
+  
