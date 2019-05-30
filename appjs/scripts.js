@@ -43,6 +43,7 @@
  
   function showDetails(pokemon) {
     var pokemon = pokemon.name;
+    console.log(pokemon, name);
    }
  
   function addListItem(pokelist) {
