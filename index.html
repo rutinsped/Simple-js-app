@@ -14,15 +14,37 @@
         <header class=header>
             <div class= griditem1><h1>Pokédex</h1></div>
             <div class= griditem2><h2>NAME  HEIGHT  TYPES</h2></div>
+            <nav class="navbar">
+                <ul>
+                  <li>Pokemo Land</li>
+                  <form action="/" id="form">
+                    <div class='input-wrapper'>
+                      <input type="text" id="email" placeholder="Email Address">
+                    </div>
+                    <div class='input-wrapper'>
+                      <input type="password" id="password" placeholder="Password">
+                    </div>
+                    <input type="submit" value="Register">
+                  </form>
+                </ul>
+              </nav>
         </header>  
-        <main class=pokecontainer>
-
+        
+        <div id="modal-container">
+            <canvas>
+            id="canvas"
+            width="600"
+            height="600"
+            pointer-action='none'
+          </canvas>
+        </div> 
+        <div class="main-poke-container">
+        <button id="dialog-container">Display Dialog</button>
+          <div class="pokemon-container">
             <ul id=buttons class=pokelist>
-                       
-                
             </ul>
-                        
-        </main>
+          </div>
+        </div>
 
         <footer class=footer>
                 <br>
@@ -35,6 +57,7 @@
         <script src="appjs/promise-polyfill.js"></script>
         <script src="appjs/fetch-polyfill.js"></script>
         <script src="appjs/scripts.js"></script>
+        <script src="appjs/reg.validation.js"></script>
     </body>
 
 </html>
