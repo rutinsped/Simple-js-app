@@ -284,3 +284,4 @@ if (!('Promise' in globalNS)) {
 }
 
 })));
+
