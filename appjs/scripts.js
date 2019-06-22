@@ -12,8 +12,11 @@
     function getAll() {
       return repository;
     }
-  
+    
+    // When called loads the list of pokemons from the API
+    // to the repository variable.
     function loadList() {
+      console.log('%c LOAD-LIST CALLED', 'color: blue; font-size: 20px; font-weight:bold;');
       return fetch(apiUrl).then(function (response) {
         return response.json();
       }).then(function (json) {
@@ -30,6 +33,8 @@
     }
   
     function loadDetails(pokemon) {
+      console.log('%c LOAD-DETAILS CALLED', 'color: blue; font-size: 20px; font-weight:bold;');
+      console.log(pokemon);
       var url = pokemon.detailsUrl;
       return fetch(url)
         .then(function (response) {
@@ -38,59 +43,48 @@
         .then(function (details) {
           pokemon.imageUrl = details.sprites.front_default;
           pokemon.height = details.height;
-          pokemon.types = Object.keys(details.types);
+          pokemon.types = details.types.map(pokemon => pokemon.type.name); 
         })
         .catch(function (e) {
-          console.error(e);
+          console.log(e);
         });
     }
-
+  
+    // to access any method, function or variable
+    // in the function it has to be returned.
     return {
       add: add,
       getAll: getAll,
       loadList: loadList,
       loadDetails: loadDetails,
-      }
+    }
 
   })();
+  // pokeRepository Function.
+
+  // We first call the loadlist fuction
+  // and call the addListItem function 
+  // passing each pokemon to it.
+  pokemonRepository.loadList().then(function(){
+    var pokemons = pokemonRepository.getAll()
+    console.log(pokemons)
+    pokemons.forEach(addListItem);
+  });
+
 
   var $pokelist = document.querySelector('.pokelist');
   var $modalContainer = document.querySelector('#modal-container');
 
-
-
-  function showDetails(pokemon) {
-
-    //check in the browser console to see the pokemons you click on.
-    console.log('First pokemon details',pokemon)
-
-     // you pass the pokemon clicked to the loadDetails
-     pokemonRepository.loadDetails(pokemon)
-     .then(function() {
-      var modal    = document.createElement('div');
-      var image    = document.createElement('img');
-      var name     = document.createElement('h1');
-      var height   = document.createElement('p');
-      var types    = document.createElement('p');
-      var closeBtn = document.createElement('button');
-      var exist    = $modalContainer.querySelector('#modal-container');
-       //uncomment this code and continue with the rest. ask me when you are stuck
-       console.log('Second pokemon details',pokemon)
-     });
- 
-   }
-
-   function addListItem(pokelist) {
-
-    var pokemon = pokelist;
+  // addListItem takes the pokemons and creates
+  // a list element and a button for each.
+  // Then creates a click event for each button
+  // when then calls the showDetails function
+  // passing it the pokemon.
+  function addListItem(pokemon) {
     var listItemElement = document.createElement('li');
     var btn = document.createElement("BUTTON");
     btn.innerText = pokemon.name;
-
-    //listItemElement.innerText = pokemon.name; no need to put the
-    // name inside the li element any more since the button displays
-    // it well
-
+    
     listItemElement.appendChild(btn);
 
     btn.addEventListener ("click", function() {
@@ -100,118 +94,79 @@
     $pokelist.appendChild(listItemElement);
   }
 
-  (function () {
-    var dialogPromiseReject;
-
-    function showModal(title, text) {
-      $modalContainer.innerHTML = '';
-      
+  /* The showDetails recieves the pokemon
+      and then passes it to the loadDetails
+      function
+  */
+  function showDetails(pokemon) {
+   pokemonRepository.loadDetails(pokemon)
+    .then(function() {
       var modal = document.createElement('div');
-      modal.classList.add('modal');
+      var image = document.createElement('img');
+      var h1 = document.createElement('h1');
+      var height = document.createElement('p');
+      var types = document.createElement('p');
+      var closeBtn = document.createElement('button');
+      var exist = $modalContainer.querySelector('.modal');
+
+      pokemon.types.map(type => {
+        var span = document.createElement('span');
+            span.innerText = type;
+          return types.appendChild(span);
+        
+      });
       
-      var closeButtonElement = document.createElement('button');
-      closeButtonElement.classList.add('modal-close');
-      closeButtonElement.innerText = 'Close';
-      closeButtonElement.addEventListener('click', hideModal);
-      
-      var titleElement = document.createElement('h1');
-      titleElement.innerText = title;
-      
-      var contentElement = document.createElement('p');
-      contentElement.innerText = text;
-      
-      modal.appendChild(closeButtonElement);
-      modal.appendChild(titleElement);
-      modal.appendChild(contentElement);
+      if (exist) {
+        $modalContainer.removeChild(exist);
+      }
+
       $modalContainer.appendChild(modal);
-      
-      $modalContainer.classList.add('is-visible');
-    }
+      $modalContainer.classList.add('is-visible')
     
-    function hideModal() {
-      $modalContainer.classList.remove('is-visible');
+      modal.classList.add('modal');
+      image.classList.add('pokemon-img');
+      types.classList.add('pokemon-types');
+      closeBtn.classList.add('modal-close');
+      h1.classList.add('h1');
+      height.classList.add('height')
+      h1.innerText   = pokemon.name;
+      height.innerText = 'Height - ' + pokemon.height;
+      closeBtn.innerText = 'Close';
+      image.setAttribute('src',pokemon.imageUrl);
+      closeBtn.addEventListener('click', hideModal);
       
-      if (dialogPromiseReject) {
-        dialogPromiseReject();
-        dialogPromiseRejct = null;
-      }
-    }
-    
-    function showDialog(title, text) {
-      showModal(title, text);
+      modal.appendChild(h1);
+      modal.appendChild(closeBtn);
+      modal.appendChild(types);
+      modal.appendChild(image);
+      modal.appendChild(height);
 
-      var modal =  $modalContainer.querySelector('.modal');
-      
-      var confirmButton = document.createElement('button');
-      confirmButton.classList.add('modal-confirm');
-      confirmButton.innerText = 'Confirm';
-      
-      var cancelButton = document.createElement('button');
-      cancelButton.classList.add('modal-cancel');
-      cancelButton.innerText = 'Cancel';
-      
-      modal.appendChild(confirmButton);
-      modal.appendChild(cancelButton);
-      
-      
-      
-     confirmButton.focus();
-      
-      return new Promise((resolve, reject) => {
-        cancelButton.addEventListener('click', hideModal);
-        confirmButton.addEventListener('click', () => {
-          dialogPromiseReject = null; 
-          hideModal();
-          resolve();
-        });
-      
-        dialogPromiseReject = reject;
       });
-    }
+  }
+    
   
-    
-    document.querySelector('#show-modal').addEventListener('click', () => {
-      showModal('Modal title', 'This is the modal content!');
-    });
-    
-    document.querySelector('#show-dialog').addEventListener('click', () => {
-      showDialog('Confirm action', 'Are you sure you want to do this?').then(function() {
-        alert('confirmed!');
-      }, () => {
-        alert('not confirmed');
-      });
-    }); 
-      
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-        hideModal();  
-      }
-    });
-    
-    $modalContainer.addEventListener('click', (e) => {
-      
-      var target = e.target;
-      if (target === $modalContainer) {
-        hideModal();
-      }
-    });
-
-  })();
-    
- // pokemonRepository.add(pokemon)
- 
- // Calls the loadList function and then call the getAll function
- // to get all pokemons in the repository array inside the
- // pokemonRepository IIFE
-
-  pokemonRepository.loadList().then(function() {
-
-    var pokemons = pokemonRepository.getAll();
-    console.log(pokemons)
-    pokemons.forEach(addListItem);
-    
+  function hideModal() {
+    $modalContainer.classList.remove('is-visible');
+  };   
+  
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+      hideModal();  
+    }
   });
   
+  $modalContainer.addEventListener('click', (e) => {
+    
+    var target = e.target;
+    if (target === $modalContainer) {
+      hideModal();
+    }
+  });
+
+ 
+  console.log('%c REPO OUTSIDE', 'color: blue; font-size: 20px; font-weight:bold;');
+    console.log(pokemonRepository.repository);
+    
  })();
 
  
