@@ -18,7 +18,8 @@
     function loadList() {
         return fetch(apiUrl).then(function (response) {
         return response.json();
-      }).then(function (json) {
+      })
+      .then(function (json) {
         json.results.forEach(function (item) {
           var pokemon = {
             name: item.name,
@@ -26,13 +27,13 @@
           };
           add(pokemon);
         });
-      }).catch(function (e) {
-        console.error(e);
       })
+      .catch(function (e) {
+        console.error(e);
+      });
     }
   
-    function loadDetails(pokemon) {
-     
+    function loadDetails(pokemon) {     
       var url = pokemon.detailsUrl;
       return fetch(url)
         .then(function (response) {
@@ -65,7 +66,6 @@
   // passing each pokemon to it.
   pokemonRepository.loadList().then(function(){
     var pokemons = pokemonRepository.getAll()
-    console.log(pokemons)
     pokemons.forEach(addListItem);
   });
 
