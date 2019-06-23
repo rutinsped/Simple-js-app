@@ -16,8 +16,7 @@
     // When called loads the list of pokemons from the API
     // to the repository variable.
     function loadList() {
-      console.log('%c LOAD-LIST CALLED', 'color: blue; font-size: 20px; font-weight:bold;');
-      return fetch(apiUrl).then(function (response) {
+        return fetch(apiUrl).then(function (response) {
         return response.json();
       }).then(function (json) {
         json.results.forEach(function (item) {
@@ -33,8 +32,7 @@
     }
   
     function loadDetails(pokemon) {
-      console.log('%c LOAD-DETAILS CALLED', 'color: blue; font-size: 20px; font-weight:bold;');
-      console.log(pokemon);
+     
       var url = pokemon.detailsUrl;
       return fetch(url)
         .then(function (response) {
@@ -161,12 +159,8 @@
     if (target === $modalContainer) {
       hideModal();
     }
-  });
-
- 
-  console.log('%c REPO OUTSIDE', 'color: blue; font-size: 20px; font-weight:bold;');
-    console.log(pokemonRepository.repository);
-    
+  }); 
+     
  })();
 
  
