@@ -37,7 +37,6 @@ body {
     background-color: #fff;
     border: 1px solid #ddd;
     }
-
    
 footer {
     text-align: center;
@@ -95,10 +94,8 @@ button:hover {
       .modal-close:hover {
         background-color: unset !important;
         color: unset !important;
-      }
-        
-         
-      
+      }          
+           
       .modal p {
         margin-bottom: 10px;
       
